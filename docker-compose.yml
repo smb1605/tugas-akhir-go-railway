@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: dicoding
+      MYSQL_DATABASE: todo-db
+    networks:
+      - todo-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4040:4040
+    restart: on-failure
+    networks:
+      - todo-network
+    depends_on:
+      - mysql
+    environment:
+      DB_USER: root
+      DB_PASSWORD: dicoding
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: todo-db
+      PORT: 4040
+
+volumes:
+  todo-mysql-data:
+
+networks:
+  todo-network:
+    driver: bridge
