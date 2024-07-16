@@ -11,12 +11,12 @@ import (
 
 var DB *gorm.DB
 
-func LoadEnv() {
-	err := godotenv.Load()
-	if err != nil {
-		panic("failed to load file")
-	}
-}
+// func LoadEnv() {
+// 	err := godotenv.Load()
+// 	if err != nil {
+// 		panic("failed to load file")
+// 	}
+// }
 
 type DBConfig struct {
 	Username string
