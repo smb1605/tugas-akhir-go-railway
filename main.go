@@ -88,7 +88,7 @@ func main() {
 	})
 	api.GET("/test", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "testing endpoint",
+			"message": "testing endpoint!",
 		})
 	})
 	api.POST("/login", userHandler.Login)
